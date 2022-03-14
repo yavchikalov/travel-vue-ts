@@ -1,0 +1,61 @@
+
+:root {
+    --color-black: #000;
+    --color-white: #fff;
+    --color-buttercup: #f6a621;
+    --color-paco: #44180f;
+    --color-abbey: #cccccc;
+    --color-sandy-brown: #f4b25c;
+    --defined-indent: 8px;
+}
+
+html,
+body {
+    font-size: 16px;
+    background: var(--color-white);
+    color: var(--color-paco);
+    height: 100%;
+    font-family: sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-size: 2.5rem;
+}
+
+@for $i from 1 through 10 {
+    .pt-#{$i} {
+        padding-top: calc(var(--defined-indent) * #{$i});
+    }
+    .pb-#{$i} {
+        padding-bottom: calc(var(--defined-indent) * #{$i});
+    }
+    .pl-#{$i} {
+        padding-left: calc(var(--defined-indent) * #{$i});
+    }
+    .pr-#{$i} {
+        padding-right: calc(var(--defined-indent) * #{$i});
+    }
+    .pa-#{$i} {
+        padding: calc(var(--defined-indent) * #{$i});
+    }
+    .py-#{$i} {
+        padding: calc(var(--defined-indent) * #{$i}) 0;
+    }
+    .px-#{$i} {
+        padding: 0 calc(var(--defined-indent) * #{$i});
+    }
+}
