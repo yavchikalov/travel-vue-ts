@@ -7,6 +7,7 @@
     main
         LayoutContainer
             router-view
+    .app__left-side
     LayoutFooter
 </template>
 
@@ -32,7 +33,7 @@ provide('setNavigationList', setNavigationList);
 </script>
 
 <style lang="scss">
-@import '~assets/style/global.scss';
+@import "~assets/style/global.scss";
 #app {
     height: 100%;
 }
@@ -44,6 +45,15 @@ provide('setNavigationList', setNavigationList);
     flex-direction: column;
     justify-content: space-between;
     // height: 100%;
+    &__left-side {
+        position: fixed;
+        left: 0;
+        z-index: 300;
+        top: 80px;
+        width: 80px;
+        border-right: 1px solid #e2e2eb;
+        height: 100%;
+    }
 }
 main {
     flex-grow: 1;

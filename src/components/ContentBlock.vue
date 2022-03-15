@@ -2,14 +2,14 @@
 .content-block
     .content-block__title-wrapper(
         v-if="title"
-        :class="{'content-block__title-wrapper--right' : right, 'content-block__title-wrapper--pure': pure}"
+        :class="{ 'content-block__title-wrapper--right': right, 'content-block__title-wrapper--pure': pure }"
     )
         router-link.content-block__title.content-block__title--link(
             v-if="to"
             :to="to"
         )
             span {{ title }}
-            .content-block__title-icon
+            .content-block__title-icon.ml-3
         .content-block__title(
             v-else
         ) {{ title }}
@@ -30,6 +30,7 @@ defineProps<{
 .content-block {
     position: relative;
     z-index: 1;
+    scroll-margin-top: 80px;
     &__title {
         $title: &;
         height: 80px;
@@ -57,9 +58,8 @@ defineProps<{
             width: 10px;
             height: 18px;
             background-color: var(--color-white);
-            mask: url('@/assets/icons/chevron.svg') no-repeat center;
-            padding-left: 24px;
-            transition: transform .3s ease-in-out;
+            mask: url("@/assets/icons/chevron.svg") no-repeat center;
+            transition: transform 0.3s ease-in-out;
             will-change: transform;
         }
     }

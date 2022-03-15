@@ -6,18 +6,50 @@ header.header
         .header__logo-icon M
         .header__logo-text.pl-1 Meycas company
     .header__menu
-        nav
+        nav(
+            v-show="isOpenMenu"
+        )
             router-link.header__menu-link(
-                to="/"
-            ) menu
-        .header__menu-button button
+                v-for="(menuItem, menuKey) in menuList"
+                :key="menuKey"
+                :to="menuItem.route"
+            ) {{ menuItem.title }}
+        .header__menu-link(
+            v-show="!isOpenMenu"
+            @click="handleMenu"
+        ) Menu
+        .header__menu-button(
+            @click="handleMenu"
+        )
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
 
-export default defineComponent({
-    name: 'LayoutHeader'
-});
+const isOpenMenu = ref<boolean>(false);
+
+const menuList = ref([
+    {
+        title: 'Contacts',
+        route: '/'
+    },
+    {
+        title: 'Blog',
+        route: '/'
+    },
+    {
+        title: 'About',
+        route: '/'
+    },
+    {
+        title: 'Works',
+        route: '/'
+    }
+]);
+
+const handleMenu = () => {
+    isOpenMenu.value = !isOpenMenu.value;
+};
+
 </script>
 <style lang="scss" scoped>
 .header {
@@ -62,19 +94,35 @@ export default defineComponent({
             z-index: 100;
             will-change: transform;
             transform: translateX(-100%);
-            transition: transform .5s .1s;
+            transition: transform 0.5s 0.1s;
         }
     }
     &__menu {
         display: flex;
-        align-items: center;
+        nav {
+            display: flex;
+        }
         &-button {
             height: 80px;
             width: 80px;
             border-left: 1px solid #e2e2eb;
+            background: url("@/assets/icons/burger.svg") center no-repeat;
+            cursor: pointer;
         }
         &-link {
             padding: 0 32px;
+            color: #22252c;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: bold;
+            transition: opacity 0.2s linear;
+            cursor: pointer;
+            letter-spacing: 5px;
+            display: flex;
+            align-items: center;
+            &:hover {
+                opacity: 0.5;
+            }
         }
     }
 }

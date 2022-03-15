@@ -3,6 +3,8 @@
     .layout-navigation__item(
         v-for="item in list"
         :key="item.anchor"
+        :class="{ 'layout-navigation__item--active': item.anchor === current }"
+        @click="handleAchore(item.anchor, item.block)"
     )
         .layout-navigation__item-icon N
         .layout-navigation__item-title {{ item.title }}
@@ -10,11 +12,44 @@
 </template>
 
 <script lang="ts" setup>
-import { IListItemProp } from '@/types/layouts/LayoutNavigation';
+import { onBeforeUnmount, watchSyncEffect, computed, ref } from 'vue';
+import { IListItemProp, TBlock } from '@/types/layouts/LayoutNavigation';
 
-defineProps<{
+const props = defineProps<{
     list: IListItemProp[]
 }>();
+
+const handleAchore = (anchor: string, block: TBlock = 'start') => {
+    document.getElementById(anchor)?.scrollIntoView({ block, behavior: 'smooth' });
+};
+
+const current = ref('');
+
+let observer: IntersectionObserver;
+
+watchSyncEffect(() => {
+    if (props.list.length) {
+        observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entrie => {
+                if (entrie.isIntersecting) {
+                    const item = props.list.find(({ anchor }) => anchor === entrie.target.id);
+                    if (item) current.value = item.anchor;
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        props.list.forEach(item => {
+            const target = document.getElementById(item.anchor);
+            if (target) observer.observe(target);
+        });
+    }
+});
+
+onBeforeUnmount(() => {
+    if (observer) observer.disconnect();
+});
 </script>
 
 <style lang="scss">
@@ -29,7 +64,7 @@ defineProps<{
     border-right: none;
     height: 100%;
     &:after {
-        content: '';
+        content: "";
         border-left: 1px solid #e2e2eb;
         position: absolute;
         left: 0;
@@ -63,6 +98,11 @@ defineProps<{
                 background: #e2e2eb;
             }
         }
+        &--active {
+            #{$item}-icon {
+                background: #e2e2eb;
+            }
+        }
         &-title {
             width: 360px;
             height: 100%;
@@ -73,7 +113,7 @@ defineProps<{
             left: 0;
             top: 0;
             transform: translateX(0);
-            transition: transform .5s .1s;
+            transition: transform 0.5s 0.1s;
             display: flex;
             align-items: center;
             color: var(--color-white);

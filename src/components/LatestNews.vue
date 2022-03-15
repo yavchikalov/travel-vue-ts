@@ -64,12 +64,13 @@ export default defineComponent({
             opacity: 0;
             transition: opacity 0.6s, transform 0.6s;
             transform: translate(0, 20px);
+            will-change: transform;
         }
         &-date {
             position: absolute;
             bottom: 16px;
             left: 32px;
-            color: var(--color-paco);
+            color: rgb(70, 70, 70);
         }
     }
 }

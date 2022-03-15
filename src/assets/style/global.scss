@@ -58,4 +58,26 @@ h3 {
     .px-#{$i} {
         padding: 0 calc(var(--defined-indent) * #{$i});
     }
+
+    .mt-#{$i} {
+        margin-top: calc(var(--defined-indent) * #{$i});
+    }
+    .mb-#{$i} {
+        margin-bottom: calc(var(--defined-indent) * #{$i});
+    }
+    .ml-#{$i} {
+        margin-left: calc(var(--defined-indent) * #{$i});
+    }
+    .mr-#{$i} {
+        margin-right: calc(var(--defined-indent) * #{$i});
+    }
+    .ma-#{$i} {
+        margin: calc(var(--defined-indent) * #{$i});
+    }
+    .my-#{$i} {
+        margin: calc(var(--defined-indent) * #{$i}) 0;
+    }
+    .mx-#{$i} {
+        margin: 0 calc(var(--defined-indent) * #{$i});
+    }
 }
