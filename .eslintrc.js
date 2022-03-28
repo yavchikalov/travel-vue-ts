@@ -24,7 +24,8 @@ module.exports = {
         }],
         'vue/script-setup-uses-vars': 'error',
         'no-undef': ['off'],
-        '@typescript-eslint/no-unused-vars': ['off']
+        '@typescript-eslint/no-unused-vars': ['off'],
+        'vue/multi-word-component-names': ['off']
     },
     overrides: [
         {

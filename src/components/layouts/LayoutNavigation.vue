@@ -8,15 +8,21 @@
     )
         .layout-navigation__item-icon N
         .layout-navigation__item-title {{ item.title }}
-    .layout-navigation__item
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, watchSyncEffect, computed, ref } from 'vue';
-import { IListItemProp, TBlock } from '@/types/layouts/LayoutNavigation';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+
+export type TBlock = 'start' | 'center' | 'end';
+
+export interface IListItemProps {
+    title: string;
+    anchor: string;
+    block?: TBlock
+}
 
 const props = defineProps<{
-    list: IListItemProp[]
+    list: IListItemProps[]
 }>();
 
 const handleAchore = (anchor: string, block: TBlock = 'start') => {
@@ -27,7 +33,7 @@ const current = ref('');
 
 let observer: IntersectionObserver;
 
-watchSyncEffect(() => {
+onMounted(() => {
     if (props.list.length) {
         observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entrie => {
@@ -54,23 +60,10 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .layout-navigation {
-    position: fixed;
-    right: 0;
+    // position: fixed;
+    // right: 0;
     z-index: 300;
-    top: 80px;
-    width: 80px;
     border-top: 1px solid #e2e2eb;
-    // border-top: none;
-    border-right: none;
-    height: 100%;
-    &:after {
-        content: "";
-        border-left: 1px solid #e2e2eb;
-        position: absolute;
-        left: 0;
-        height: 100%;
-        top: 0;
-    }
     &__item {
         $item: &;
         position: relative;
@@ -88,7 +81,6 @@ onBeforeUnmount(() => {
             align-items: center;
             width: 80px;
             height: 80px;
-            border-left: 1px solid #e2e2eb;
         }
         &:hover {
             #{$item}-title {

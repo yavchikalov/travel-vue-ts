@@ -19,131 +19,36 @@
         title="Popular Travels"
     )
         .popular-travels
-            .popular-travel
-                .popular-travel__title Исладия
-                img.popular-travel__img(
-                    src="https://mirjapan.ru/wp-content/uploads/2019/04/priroda1.jpg"
-                )
-            .popular-travel
-                .popular-travel__title Исладия
-                img.popular-travel__img(
-                    src="https://oir.mobi/uploads/posts/2021-05/1622262892_61-oir_mobi-p-krasivie-vidi-prirodi-priroda-krasivo-foto-65.jpg"
-                )
-            .popular-travel
-                .popular-travel__title Исладия
-                img.popular-travel__img(
-                    src="https://mirpozitiva.ru/wp-content/uploads/2019/11/1477469601_nature_gora.jpg"
-                )
-            .popular-travel
-                .popular-travel__title Исладия
-                img.popular-travel__img(
-                    src="https://bipbap.ru/wp-content/uploads/2017/07/morskie_peyzagi_krasivie_plyagi_foto_12.jpg"
-                )
-            .popular-travel
-                .popular-travel__title Исладия
-                img.popular-travel__img(
-                    src="https://7oom.ru/wp-content/uploads/peizaji-01.jpg"
-                )
-            .popular-travel
-                .popular-travel__title Исладия
-                img.popular-travel__img(
-                    src="https://novorab.ru/wp-content/uploads/2022/02/field-6574455_1920.jpg"
-                )
+            PopularTravels
     ContentBlock#contacts(
         title="Contacts"
     )
         .home__contacts
-            p Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi porro omnis nemo maiores ea incidunt esse voluptas fugiat labore, officia ex odio animi similique laborum officiis, sint inventore rerum. Impedit!
-            p Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi porro omnis nemo maiores ea incidunt esse voluptas fugiat labore, officia ex odio animi similique laborum officiis, sint inventore rerum. Impedit!
+            Contacts
+    Teleport(
+        to="#right-side"
+    )
+        LayoutNavigation(
+            :list="navigationList"
+        )
 </template>
 
 <script lang="ts" setup>
-import { inject } from 'vue';
 import ContentBlock from '@/components/ContentBlock.vue';
 import LatestNews from '@/components/LatestNews.vue';
-import { TSetNavigationList } from '@/types/App';
+import LayoutNavigation, { IListItemProps } from '@/components/layouts/LayoutNavigation.vue';
+import PopularTravels from '@/components/PopularTravels.vue';
+import Contacts from '@/components/Contacts.vue';
 
-const setNavigationList = inject<TSetNavigationList>('setNavigationList');
+const navigationList: IListItemProps[] = [
+    { title: 'Latest News', anchor: 'news', block: 'end' },
+    { title: 'Popular Travels', anchor: 'popular' },
+    { title: 'Contacts', anchor: 'contacts' }
+];
 
-if (setNavigationList) {
-    setNavigationList([
-        { title: 'Latest News', anchor: 'news', block: 'end' },
-        { title: 'Popular Travels', anchor: 'popular' },
-        { title: 'Contacts', anchor: 'contacts' }
-    ]);
-}
 </script>
 
 <style lang="scss" scoped>
-.popular-travels {
-    display: grid;
-    grid-template-areas:
-        "a a ."
-        "a a ."
-        ". f f"
-        ". f f";
-    grid-gap: 16px;
-}
-.popular-travel {
-    position: relative;
-    cursor: pointer;
-    &:after {
-        content: "";
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0);
-        position: absolute;
-        left: 0;
-        top: 0;
-        transition: background 0.3s ease-in;
-        z-index: 10;
-    }
-    &:before {
-        content: "";
-        width: 60px;
-        height: 60px;
-        background: url("@/assets/icons/loupe.svg") center no-repeat;
-        background-size: cover;
-        position: absolute;
-        left: calc(50% - 30px);
-        top: calc(50% - 30px);
-        z-index: 50;
-        opacity: 0;
-        transition: opacity 0.3s ease-in;
-    }
-    &:hover {
-        &:after {
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-        &:before {
-            opacity: 0.6;
-        }
-    }
-    &__img {
-        width: 100%;
-        height: 100%;
-    }
-    &:first-child {
-        grid-area: a;
-    }
-    &:last-child {
-        grid-area: f;
-    }
-    &__title {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.7);
-        width: 100%;
-        height: 80px;
-        color: var(--color-white);
-        font-size: 2rem;
-        display: flex;
-        align-items: center;
-        padding: 16px 24px;
-    }
-}
-
 .home {
     &__image {
         width: 100%;

@@ -3,14 +3,25 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        name: 'home',
-        component: () => import(/* webpackChunkName: "home" */ '../pages/PageHome.vue')
+        name: 'Home',
+        component: () => import(/* webpackChunkName: "home" */ '../pages/PageHome.vue'),
+        meta: {
+            menuTitle: 'Menu'
+        }
+    },
+    {
+        path: '/create',
+        name: 'Create',
+        component: () => import(/* webpackChunkName: "create" */ '../pages/PageCreate.vue'),
+        meta: {
+            menuTitle: 'Create'
+        }
+    },
+    {
+        path: '/travels',
+        name: 'Travels',
+        component: () => import(/* webpackChunkName: "create" */ '../pages/PageTravels.vue')
     }
-    // {
-    //   path: '/create',
-    //   name: 'about',
-    //   component: () => import(/* webpackChunkName: "create" */ '../pages/create/index.vue')
-    // }
 ];
 
 const router = createRouter({

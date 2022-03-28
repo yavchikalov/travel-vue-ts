@@ -5,22 +5,33 @@ header.header
     )
         .header__logo-icon M
         .header__logo-text.pl-1 Meycas company
-    .header__menu
-        nav(
-            v-show="isOpenMenu"
-        )
-            router-link.header__menu-link(
-                v-for="(menuItem, menuKey) in menuList"
-                :key="menuKey"
-                :to="menuItem.route"
-            ) {{ menuItem.title }}
-        .header__menu-link(
-            v-show="!isOpenMenu"
-            @click="handleMenu"
-        ) Menu
-        .header__menu-button(
-            @click="handleMenu"
-        )
+    .header__menu(
+        :class="{ 'header__menu--open': isOpenMenu }"
+    )
+        nav.header__menu-nav
+            TransitionGroup(
+                name="link"
+                mode="out-in"
+                appear
+            )
+                .header__menu-item(
+                    v-for="(menuItem, menuKey) in menuList"
+                    v-show="isOpenMenu"
+                    :key="menuKey"
+                )
+                    router-link.header__menu-link(
+                        :to="{ name: menuItem.route }"
+                        @click="isOpenMenu = !isOpenMenu"
+                    ) {{ menuItem.title }}
+                .header__menu-item.header__menu-item--section(
+                    v-show="!isOpenMenu"
+                    key="section"
+                    @click="handleMenu"
+                )
+                    .header__menu-link {{ $route?.name || 'Menu' }}
+    .header__button(
+        @click="handleMenu"
+    )
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
@@ -29,20 +40,20 @@ const isOpenMenu = ref<boolean>(false);
 
 const menuList = ref([
     {
-        title: 'Contacts',
-        route: '/'
+        title: 'Create',
+        route: 'Create'
     },
     {
-        title: 'Blog',
-        route: '/'
+        title: 'Travels',
+        route: 'Travels'
     },
     {
         title: 'About',
-        route: '/'
+        route: 'Home'
     },
     {
         title: 'Works',
-        route: '/'
+        route: 'Home'
     }
 ]);
 
@@ -52,14 +63,29 @@ const handleMenu = () => {
 
 </script>
 <style lang="scss" scoped>
+.link-leave-active {
+    transition: all 0.3s ease;
+}
+.link-enter-active {
+    transition: all 0.3s ease;
+}
+.link-enter-from,
+.link-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+.link-enter-active.header__menu-item--section {
+    transition-delay: 0s !important;
+}
+
 .header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0;
     background: var(--color-white);
-    z-index: 500;
+    z-index: 100;
     &__logo {
         $logo: &;
         position: relative;
@@ -97,31 +123,53 @@ const handleMenu = () => {
             transition: transform 0.5s 0.1s;
         }
     }
+    &__button {
+        height: 80px;
+        width: 80px;
+        border-left: 1px solid #e2e2eb;
+        background: url("@/assets/icons/burger.svg") center no-repeat;
+        cursor: pointer;
+    }
     &__menu {
+        $menu: &;
         display: flex;
-        nav {
-            display: flex;
-        }
-        &-button {
-            height: 80px;
-            width: 80px;
-            border-left: 1px solid #e2e2eb;
-            background: url("@/assets/icons/burger.svg") center no-repeat;
+        flex-grow: 1;
+        justify-content: flex-end;
+        &-item {
+            color: #22252c;
+            text-transform: uppercase;
+            font-weight: bold;
             cursor: pointer;
+            letter-spacing: 5px;
+            will-change: auto;
         }
         &-link {
             padding: 0 32px;
-            color: #22252c;
-            text-transform: uppercase;
+            color: inherit;
             text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.2s linear;
-            cursor: pointer;
-            letter-spacing: 5px;
+            transition: opacity 0.3s linear;
             display: flex;
+            height: 100%;
             align-items: center;
             &:hover {
                 opacity: 0.5;
+            }
+        }
+        &-nav {
+            display: flex;
+            #{$menu}-item {
+                &:nth-child(1) {
+                    transition-delay: 500ms;
+                }
+                &:nth-child(2) {
+                    transition-delay: 450ms;
+                }
+                &:nth-child(3) {
+                    transition-delay: 400ms;
+                }
+                &:nth-child(4) {
+                    transition-delay: 350ms;
+                }
             }
         }
     }

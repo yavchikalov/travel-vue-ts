@@ -53,10 +53,12 @@ h3 {
         padding: calc(var(--defined-indent) * #{$i});
     }
     .py-#{$i} {
-        padding: calc(var(--defined-indent) * #{$i}) 0;
+        padding-top: calc(var(--defined-indent) * #{$i});
+        padding-bottom: calc(var(--defined-indent) * #{$i});
     }
     .px-#{$i} {
-        padding: 0 calc(var(--defined-indent) * #{$i});
+        padding-left: calc(var(--defined-indent) * #{$i});
+        padding-right: calc(var(--defined-indent) * #{$i});
     }
 
     .mt-#{$i} {
@@ -75,9 +77,11 @@ h3 {
         margin: calc(var(--defined-indent) * #{$i});
     }
     .my-#{$i} {
-        margin: calc(var(--defined-indent) * #{$i}) 0;
+        margin-top: calc(var(--defined-indent) * #{$i});
+        margin-bottom: calc(var(--defined-indent) * #{$i});
     }
     .mx-#{$i} {
-        margin: 0 calc(var(--defined-indent) * #{$i});
+        margin-left: calc(var(--defined-indent) * #{$i});
+        margin-right: calc(var(--defined-indent) * #{$i});
     }
 }

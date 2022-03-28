@@ -4,12 +4,10 @@
         v-if="title"
         :class="{ 'content-block__title-wrapper--right': right, 'content-block__title-wrapper--pure': pure }"
     )
-        router-link.content-block__title.content-block__title--link(
+        UIButton.content-block__button.pa-4(
             v-if="to"
             :to="to"
-        )
-            span {{ title }}
-            .content-block__title-icon.ml-3
+        ) {{ title }}
         .content-block__title(
             v-else
         ) {{ title }}
@@ -18,6 +16,9 @@
 </template>
 
 <script lang="ts" setup>
+import { defineAsyncComponent } from 'vue';
+const UIButton = defineAsyncComponent(() => import('@/components/ui/UIButton.vue'));
+
 defineProps<{
     title: string,
     to?: string,
@@ -42,26 +43,19 @@ defineProps<{
         align-items: center;
         padding: 32px;
         min-width: 280px;
+        max-width: 30%;
+        width: 100%;
         text-decoration: none;
         background: #a8acb7;
-        &:hover {
-            #{$title}-icon {
-                transform: translateX(10px);
-            }
-        }
-        &--link {
-            background: #30343c;
-            align-items: center;
-            justify-content: space-between;
-        }
-        &-icon {
-            width: 10px;
-            height: 18px;
-            background-color: var(--color-white);
-            mask: url("@/assets/icons/chevron.svg") no-repeat center;
-            transition: transform 0.3s ease-in-out;
-            will-change: transform;
-        }
+    }
+    &__button {
+        height: 80px;
+        min-width: 280px;
+        max-width: 30%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 32px;
     }
     &__title-wrapper {
         background: #e8e8f2;
